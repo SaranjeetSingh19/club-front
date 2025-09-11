@@ -1,5 +1,5 @@
 import { useState } from "react";
-import cllgName from "../public/iilm-uni.jpg"
+import cllgName from "../public/iilm-uni.png"
 import clubLogo from "../public/club-logo.jpg"
 import "./App.css";
 
@@ -261,36 +261,39 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 text-gray-800 dark:text-gray-200 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 text-gray-800 dark:text-gray-200 py-4 px-4">
 
 
 
 
 
 <div className="  text-white shadow-md">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="flex justify-between items-center h-20">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4">
+    <div className="flex justify-between items-center h-24">
       
-  
 
 
 
 
-<div className=" w-full text-white shadow-md">
+<div className=" w-full text-white          ">
   {/* Full-width outer container */}
   <div className="px-6 py-4 flex flex-col sm:flex-row sm:justify-between items-center text-center sm:text-left max-w-screen-xl mx-auto">
     
     {/* Left: College Name */}
     <div>
-      <span className="text-xl font-bold tracking-wide">IILM University</span>
+      {/* <span className="text-xl font-bold tracking-wide">IILM University</span> */}
+      <img src={cllgName} alt="" className="w-36 h-12" />
       <p className="text-sm text-gray-400">Greater Noida, India</p>
     </div>
 
     {/* Right: Club Name */}
     <div className="mt-2 sm:mt-0">
-      <h1 className="text-xl font-extrabold tracking-wide">
+      {/* <h1 className="text-xl font-extrabold tracking-wide">
         Electro<span className="text-blue-400">S</span>apien Club
-      </h1>
+      </h1> */}
+
+      <img src={clubLogo} alt="" className="w-36 h-20" />
+
       <p className="text-sm italic text-gray-400">Where ECE meets AI & Robotics</p>
     </div>
 
@@ -318,7 +321,7 @@ function App() {
 
 
 
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden mt-4">
+      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden mt-8">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
           <h1 className="text-3xl font-bold">Electrosapien Club</h1>
