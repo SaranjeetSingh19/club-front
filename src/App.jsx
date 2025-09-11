@@ -1,51 +1,53 @@
-import { useState } from 'react';
+import { useState } from "react";
+import cllgName from "../public/iilm-uni.jpg"
+import clubLogo from "../public/club-logo.jpg"
 import "./App.css";
 
 function App() {
   // State for form data
   const [formData, setFormData] = useState({
     // Personal Information
-    fullName: '',
-    email: '',
-    phone: '',
-    college: '',
-    yearOfStudy: '',
-    branch: '',
-    cgpa: '',
-    alternateContact: '',
-    
+    fullName: "",
+    email: "",
+    phone: "",
+    college: "",
+    yearOfStudy: "",
+    branch: "",
+    cgpa: "",
+    alternateContact: "",
+
     // Position Application
-    position: '',
-    openToOtherPositions: '',
-    whyJoin: '',
-    uniqueSkills: '',
-    
+    position: "",
+    openToOtherPositions: "",
+    whyJoin: "",
+    uniqueSkills: "",
+
     // Technical Background
     programmingLanguages: [],
     hardwareExperience: [],
     softwareTools: [],
     areasOfInterest: [],
-    skillLevel: '',
-    
+    skillLevel: "",
+
     // Project Experience
-    technicalProjects: '',
-    competitions: '',
-    
+    technicalProjects: "",
+    competitions: "",
+
     // Commitment & Availability
-    timeCommitment: '',
-    weekendAvailability: '',
-    yearCommitment: '',
-    
+    timeCommitment: "",
+    weekendAvailability: "",
+    yearCommitment: "",
+
     // Motivation & Goals
-    learnAchieve: '',
-    teamContribution: '',
-    problemSolving: '',
-    
+    learnAchieve: "",
+    teamContribution: "",
+    problemSolving: "",
+
     // Additional Information
-    questions: '',
-    additionalInfo: '',
-    hearAbout: '',
-    
+    questions: "",
+    additionalInfo: "",
+    hearAbout: "",
+
     // Declaration
     declaration1: false,
     declaration2: false,
@@ -59,35 +61,42 @@ function App() {
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
-    if (type === 'checkbox') {
+
+    if (type === "checkbox") {
       // Handle array checkboxes (programming languages, hardware, etc.)
-      if (['programmingLanguages', 'hardwareExperience', 'softwareTools', 'areasOfInterest'].includes(name)) {
+      if (
+        [
+          "programmingLanguages",
+          "hardwareExperience",
+          "softwareTools",
+          "areasOfInterest",
+        ].includes(name)
+      ) {
         if (checked) {
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
-            [name]: [...prev[name], value]
+            [name]: [...prev[name], value],
           }));
         } else {
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
-            [name]: prev[name].filter(item => item !== value)
+            [name]: prev[name].filter((item) => item !== value),
           }));
         }
-      } 
-      // Handle boolean checkboxes (declaration)
-      else if (name === 'declaration1' || name === 'declaration2') {
-        setFormData(prev => ({ ...prev, [name]: checked }));
       }
-    } else if (type === 'radio' || type === 'select-one') {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      // Handle boolean checkboxes (declaration)
+      else if (name === "declaration1" || name === "declaration2") {
+        setFormData((prev) => ({ ...prev, [name]: checked }));
+      }
+    } else if (type === "radio" || type === "select-one") {
+      setFormData((prev) => ({ ...prev, [name]: value }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -98,40 +107,59 @@ function App() {
   // Validate form
   const validateForm = () => {
     const newErrors = {};
-    
+
     // Required fields validation
     const requiredFields = [
-      'fullName', 'email', 'phone', 'college', 'yearOfStudy', 'branch',
-      'position', 'openToOtherPositions', 'whyJoin', 'uniqueSkills',
-      'skillLevel', 'technicalProjects', 'competitions',
-      'timeCommitment', 'weekendAvailability', 'yearCommitment',
-      'learnAchieve', 'teamContribution', 'problemSolving', 'hearAbout'
+      "fullName",
+      "email",
+      "phone",
+      "college",
+      "yearOfStudy",
+      "branch",
+      "position",
+      "openToOtherPositions",
+      "whyJoin",
+      "uniqueSkills",
+      "skillLevel",
+      "technicalProjects",
+      "competitions",
+      "timeCommitment",
+      "weekendAvailability",
+      "yearCommitment",
+      "learnAchieve",
+      "teamContribution",
+      "problemSolving",
+      "hearAbout",
     ];
 
-    requiredFields.forEach(field => {
-      if (!formData[field] || (Array.isArray(formData[field]) && formData[field].length === 0)) {
-        newErrors[field] = 'This field is required';
+    requiredFields.forEach((field) => {
+      if (
+        !formData[field] ||
+        (Array.isArray(formData[field]) && formData[field].length === 0)
+      ) {
+        newErrors[field] = "This field is required";
       }
     });
 
     // Areas of interest validation
     if (formData.areasOfInterest.length === 0) {
-      newErrors.areasOfInterest = 'Please select at least one area of interest';
+      newErrors.areasOfInterest = "Please select at least one area of interest";
     }
 
     // Declaration validation
     if (!formData.declaration1) {
-      newErrors.declaration1 = 'You must confirm the accuracy of your information';
+      newErrors.declaration1 =
+        "You must confirm the accuracy of your information";
     }
-    
+
     if (!formData.declaration2) {
-      newErrors.declaration2 = 'You must commit to active participation';
+      newErrors.declaration2 = "You must commit to active participation";
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = "Please enter a valid email address";
     }
 
     setErrors(newErrors);
@@ -141,9 +169,12 @@ function App() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
-      setSubmitStatus({ type: 'error', message: 'Please fix the errors in the form' });
+      setSubmitStatus({
+        type: "error",
+        message: "Please fix the errors in the form",
+      });
       return;
     }
 
@@ -151,75 +182,78 @@ function App() {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch('https://club-back.onrender.com/api/applications', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://club-back.onrender.com/api/applications",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
-        setSubmitStatus({ 
-          type: 'success', 
-          message: 'Application submitted successfully!',
-          applicationId: data.applicationId 
+        setSubmitStatus({
+          type: "success",
+          message: "Application submitted successfully!",
+          applicationId: data.applicationId,
         });
         // Reset form on successful submission
         setFormData({
-          fullName: '',
-          email: '',
-          phone: '',
-          college: '',
-          yearOfStudy: '',
-          branch: '',
-          cgpa: '',
-          alternateContact: '',
-          position: '',
-          openToOtherPositions: '',
-          whyJoin: '',
-          uniqueSkills: '',
+          fullName: "",
+          email: "",
+          phone: "",
+          college: "",
+          yearOfStudy: "",
+          branch: "",
+          cgpa: "",
+          alternateContact: "",
+          position: "",
+          openToOtherPositions: "",
+          whyJoin: "",
+          uniqueSkills: "",
           programmingLanguages: [],
           hardwareExperience: [],
           softwareTools: [],
           areasOfInterest: [],
-          skillLevel: '',
-          technicalProjects: '',
-          competitions: '',
-          timeCommitment: '',
-          weekendAvailability: '',
-          yearCommitment: '',
-          learnAchieve: '',
-          teamContribution: '',
-          problemSolving: '',
-          questions: '',
-          additionalInfo: '',
-          hearAbout: '',
+          skillLevel: "",
+          technicalProjects: "",
+          competitions: "",
+          timeCommitment: "",
+          weekendAvailability: "",
+          yearCommitment: "",
+          learnAchieve: "",
+          teamContribution: "",
+          problemSolving: "",
+          questions: "",
+          additionalInfo: "",
+          hearAbout: "",
           declaration1: false,
           declaration2: false,
         });
       } else {
-        setSubmitStatus({ 
-          type: 'error', 
-          message: data.message || 'Failed to submit application' 
+        setSubmitStatus({
+          type: "error",
+          message: data.message || "Failed to submit application",
         });
         if (data.missingFields) {
-          setErrors(prev => {
+          setErrors((prev) => {
             const newErrors = { ...prev };
-            data.missingFields.forEach(field => {
-              newErrors[field] = 'This field is required';
+            data.missingFields.forEach((field) => {
+              newErrors[field] = "This field is required";
             });
             return newErrors;
           });
         }
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitStatus({ 
-        type: 'error', 
-        message: 'Network error. Please check your connection and try again.' 
+      console.error("Error submitting form:", error);
+      setSubmitStatus({
+        type: "error",
+        message: "Network error. Please check your connection and try again.",
       });
     } finally {
       setLoading(false);
@@ -228,23 +262,89 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 text-gray-800 dark:text-gray-200 py-8 px-4">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden">
+
+
+
+
+
+<div className="  text-white shadow-md">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center h-20">
+      
+  
+
+
+
+
+<div className=" w-full text-white shadow-md">
+  {/* Full-width outer container */}
+  <div className="px-6 py-4 flex flex-col sm:flex-row sm:justify-between items-center text-center sm:text-left max-w-screen-xl mx-auto">
+    
+    {/* Left: College Name */}
+    <div>
+      <span className="text-xl font-bold tracking-wide">IILM University</span>
+      <p className="text-sm text-gray-400">Greater Noida, India</p>
+    </div>
+
+    {/* Right: Club Name */}
+    <div className="mt-2 sm:mt-0">
+      <h1 className="text-xl font-extrabold tracking-wide">
+        Electro<span className="text-blue-400">S</span>apien Club
+      </h1>
+      <p className="text-sm italic text-gray-400">Where ECE meets AI & Robotics</p>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden mt-4">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
-          <h1 className="text-3xl font-bold">Electrosapean Club</h1>
-          <p className="mt-2 text-blue-100">Member Recruitment Application 2025</p>
+          <h1 className="text-3xl font-bold">Electrosapien Club</h1>
+          <p className="mt-2 text-blue-100">
+            Member Recruitment Application 2025
+          </p>
           <p className="mt-4">
-            Where Electronics & Communication Engineering meets Robotics and AI innovation!
+            Where Electronics & Communication Engineering meets Robotics and AI
+            innovation!
           </p>
         </div>
 
         {/* Status Message */}
         {submitStatus && (
-          <div className={`p-4 mx-6 mt-6 rounded-lg ${submitStatus.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+          <div
+            className={`p-4 mx-6 mt-6 rounded-lg ${
+              submitStatus.type === "success"
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }`}
+          >
             {submitStatus.message}
             {submitStatus.applicationId && (
               <div className="mt-2">
-                Your application ID: <strong>{submitStatus.applicationId}</strong>
+                Your application ID:{" "}
+                <strong>{submitStatus.applicationId}</strong>
               </div>
             )}
           </div>
@@ -256,72 +356,100 @@ function App() {
             <h2 className="text-2xl font-semibold border-b border-gray-300 dark:border-gray-600 pb-2">
               Personal Information
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium mb-1">Full Name *</label>
+                <label className="block text-sm font-medium mb-1">
+                  Full Name *
+                </label>
                 <input
                   type="text"
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.fullName ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.fullName
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 />
-                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+                {errors.fullName && (
+                  <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+                )}
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium mb-1">Email Address *</label>
+                <label className="block text-sm font-medium mb-1">
+                  Email Address *
+                </label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.email
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 />
-                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                )}
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium mb-1">Phone Number *</label>
+                <label className="block text-sm font-medium mb-1">
+                  Phone Number *
+                </label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.phone ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.phone
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 />
-                {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                {errors.phone && (
+                  <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+                )}
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium mb-1">College/University *</label>
+                <label className="block text-sm font-medium mb-1">
+                  College/University *
+                </label>
                 <input
                   type="text"
                   name="college"
                   value={formData.college}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.college ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.college
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 />
-                {errors.college && <p className="text-red-500 text-xs mt-1">{errors.college}</p>}
+                {errors.college && (
+                  <p className="text-red-500 text-xs mt-1">{errors.college}</p>
+                )}
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium mb-1">Year of Study *</label>
+                <label className="block text-sm font-medium mb-1">
+                  Year of Study *
+                </label>
                 <select
                   name="yearOfStudy"
                   value={formData.yearOfStudy}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.yearOfStudy ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.yearOfStudy
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 >
                   <option value="">Select Year</option>
@@ -331,25 +459,37 @@ function App() {
                   <option value="4th Year">4th Year</option>
                   <option value="Graduate">Graduate</option>
                 </select>
-                {errors.yearOfStudy && <p className="text-red-500 text-xs mt-1">{errors.yearOfStudy}</p>}
+                {errors.yearOfStudy && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.yearOfStudy}
+                  </p>
+                )}
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium mb-1">Branch/Department *</label>
+                <label className="block text-sm font-medium mb-1">
+                  Branch/Department *
+                </label>
                 <input
                   type="text"
                   name="branch"
                   value={formData.branch}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.branch ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.branch
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 />
-                {errors.branch && <p className="text-red-500 text-xs mt-1">{errors.branch}</p>}
+                {errors.branch && (
+                  <p className="text-red-500 text-xs mt-1">{errors.branch}</p>
+                )}
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium mb-1">Current CGPA/Percentage</label>
+                <label className="block text-sm font-medium mb-1">
+                  Current CGPA/Percentage
+                </label>
                 <input
                   type="text"
                   name="cgpa"
@@ -358,9 +498,11 @@ function App() {
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600"
                 />
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium mb-1">Alternative Contact</label>
+                <label className="block text-sm font-medium mb-1">
+                  Alternative Contact
+                </label>
                 <input
                   type="text"
                   name="alternateContact"
@@ -377,7 +519,7 @@ function App() {
             <h2 className="text-2xl font-semibold border-b border-gray-300 dark:border-gray-600 pb-2">
               Position Application
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium mb-1">
@@ -388,38 +530,53 @@ function App() {
                   value={formData.position}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.position ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.position
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 >
                   <option value="">Select Position</option>
-                  <option value="President/Vice President">President/Vice President</option>
-                  <option value="Overall Coordinator">Overall Coordinator</option>
+                  <option value="President/Vice President">
+                    President/Vice President
+                  </option>
+                  <option value="Overall Coordinator">
+                    Overall Coordinator
+                  </option>
                   <option value="Project Manager">Project Manager</option>
                   <option value="Core Member">Core Member</option>
                 </select>
-                {errors.position && <p className="text-red-500 text-xs mt-1">{errors.position}</p>}
+                {errors.position && (
+                  <p className="text-red-500 text-xs mt-1">{errors.position}</p>
+                )}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Are you open to other positions if your first choice isn't available? *
+                  Are you open to other positions if your first choice isn't
+                  available? *
                 </label>
                 <select
                   name="openToOtherPositions"
                   value={formData.openToOtherPositions}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.openToOtherPositions ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.openToOtherPositions
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 >
                   <option value="">Select Option</option>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </select>
-                {errors.openToOtherPositions && <p className="text-red-500 text-xs mt-1">{errors.openToOtherPositions}</p>}
+                {errors.openToOtherPositions && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.openToOtherPositions}
+                  </p>
+                )}
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium mb-1">
                 Why do you want to join Electrosapean Club? *
@@ -431,18 +588,22 @@ function App() {
                 rows={4}
                 maxLength={500}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.whyJoin ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-                  }`}
+                  errors.whyJoin
+                    ? "border-red-500"
+                    : "border-gray-300 dark:border-gray-600"
+                }`}
                 placeholder="Share your motivation for joining the club (max 500 characters)"
               ></textarea>
               <div className="flex justify-between">
-                {errors.whyJoin && <p className="text-red-500 text-xs mt-1">{errors.whyJoin}</p>}
+                {errors.whyJoin && (
+                  <p className="text-red-500 text-xs mt-1">{errors.whyJoin}</p>
+                )}
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-right mt-1">
                   {formData.whyJoin.length}/500
                 </p>
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium mb-1">
                 What unique skills/perspective do you bring? *
@@ -454,12 +615,18 @@ function App() {
                 rows={4}
                 maxLength={500}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.uniqueSkills ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-                  }`}
+                  errors.uniqueSkills
+                    ? "border-red-500"
+                    : "border-gray-300 dark:border-gray-600"
+                }`}
                 placeholder="Describe your unique skills and perspective (max 500 characters)"
               ></textarea>
               <div className="flex justify-between">
-                {errors.uniqueSkills && <p className="text-red-500 text-xs mt-1">{errors.uniqueSkills}</p>}
+                {errors.uniqueSkills && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.uniqueSkills}
+                  </p>
+                )}
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-right mt-1">
                   {formData.uniqueSkills.length}/500
                 </p>
@@ -472,11 +639,22 @@ function App() {
             <h2 className="text-2xl font-semibold border-b border-gray-300 dark:border-gray-600 pb-2">
               Technical Background
             </h2>
-            
+
             <div>
-              <label className="block text-sm font-medium mb-3">Programming Languages Known</label>
+              <label className="block text-sm font-medium mb-3">
+                Programming Languages Known
+              </label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {['Python', 'C++', 'Java', 'MATLAB', 'JavaScript', 'R', 'Assembly', 'Other'].map(lang => (
+                {[
+                  "Python",
+                  "C++",
+                  "Java",
+                  "MATLAB",
+                  "JavaScript",
+                  "R",
+                  "Assembly",
+                  "Other",
+                ].map((lang) => (
                   <label key={lang} className="flex items-center space-x-2">
                     <input
                       type="checkbox"
@@ -491,11 +669,22 @@ function App() {
                 ))}
               </div>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium mb-3">Hardware Experience</label>
+              <label className="block text-sm font-medium mb-3">
+                Hardware Experience
+              </label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {['Arduino', 'Raspberry Pi', 'PCB Design', 'Microcontrollers', 'Sensors', 'FPGA', 'DSP', 'Other'].map(hw => (
+                {[
+                  "Arduino",
+                  "Raspberry Pi",
+                  "PCB Design",
+                  "Microcontrollers",
+                  "Sensors",
+                  "FPGA",
+                  "DSP",
+                  "Other",
+                ].map((hw) => (
                   <label key={hw} className="flex items-center space-x-2">
                     <input
                       type="checkbox"
@@ -510,11 +699,22 @@ function App() {
                 ))}
               </div>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium mb-3">Software Tools</label>
+              <label className="block text-sm font-medium mb-3">
+                Software Tools
+              </label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {['AutoCAD', 'SolidWorks', 'Proteus', 'KiCAD', 'ROS', 'TensorFlow', 'OpenCV', 'Other'].map(sw => (
+                {[
+                  "AutoCAD",
+                  "SolidWorks",
+                  "Proteus",
+                  "KiCAD",
+                  "ROS",
+                  "TensorFlow",
+                  "OpenCV",
+                  "Other",
+                ].map((sw) => (
                   <label key={sw} className="flex items-center space-x-2">
                     <input
                       type="checkbox"
@@ -529,11 +729,22 @@ function App() {
                 ))}
               </div>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium mb-3">Areas of Interest *</label>
+              <label className="block text-sm font-medium mb-3">
+                Areas of Interest *
+              </label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {['Robotics', 'AI/ML', 'IoT', 'Embedded Systems', 'Signal Processing', 'Communication Systems', 'Computer Vision', 'Other'].map(area => (
+                {[
+                  "Robotics",
+                  "AI/ML",
+                  "IoT",
+                  "Embedded Systems",
+                  "Signal Processing",
+                  "Communication Systems",
+                  "Computer Vision",
+                  "Other",
+                ].map((area) => (
                   <label key={area} className="flex items-center space-x-2">
                     <input
                       type="checkbox"
@@ -547,17 +758,25 @@ function App() {
                   </label>
                 ))}
               </div>
-              {errors.areasOfInterest && <p className="text-red-500 text-xs mt-1">{errors.areasOfInterest}</p>}
+              {errors.areasOfInterest && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.areasOfInterest}
+                </p>
+              )}
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium mb-1">Rate your technical skill level *</label>
+              <label className="block text-sm font-medium mb-1">
+                Rate your technical skill level *
+              </label>
               <select
                 name="skillLevel"
                 value={formData.skillLevel}
                 onChange={handleInputChange}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                  errors.skillLevel ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  errors.skillLevel
+                    ? "border-red-500"
+                    : "border-gray-300 dark:border-gray-600"
                 }`}
               >
                 <option value="">Select Skill Level</option>
@@ -565,7 +784,9 @@ function App() {
                 <option value="Intermediate">Intermediate</option>
                 <option value="Advanced">Advanced</option>
               </select>
-              {errors.skillLevel && <p className="text-red-500 text-xs mt-1">{errors.skillLevel}</p>}
+              {errors.skillLevel && (
+                <p className="text-red-500 text-xs mt-1">{errors.skillLevel}</p>
+              )}
             </div>
           </div>
 
@@ -574,14 +795,14 @@ function App() {
             <h2 className="text-2xl font-semibold border-b border-gray-300 dark:border-gray-600 pb-2">
               Project Experience
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Have you worked on any technical projects? *
                 </label>
                 <div className="flex space-x-4">
-                  {['Yes', 'No'].map(option => (
+                  {["Yes", "No"].map((option) => (
                     <label key={option} className="flex items-center space-x-2">
                       <input
                         type="radio"
@@ -595,15 +816,19 @@ function App() {
                     </label>
                   ))}
                 </div>
-                {errors.technicalProjects && <p className="text-red-500 text-xs mt-1">{errors.technicalProjects}</p>}
+                {errors.technicalProjects && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.technicalProjects}
+                  </p>
+                )}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Have you participated in any competitions/hackathons? *
                 </label>
                 <div className="flex space-x-4">
-                  {['Yes', 'No'].map(option => (
+                  {["Yes", "No"].map((option) => (
                     <label key={option} className="flex items-center space-x-2">
                       <input
                         type="radio"
@@ -617,7 +842,11 @@ function App() {
                     </label>
                   ))}
                 </div>
-                {errors.competitions && <p className="text-red-500 text-xs mt-1">{errors.competitions}</p>}
+                {errors.competitions && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.competitions}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -627,7 +856,7 @@ function App() {
             <h2 className="text-2xl font-semibold border-b border-gray-300 dark:border-gray-600 pb-2">
               Commitment & Availability
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium mb-1">
@@ -638,7 +867,9 @@ function App() {
                   value={formData.timeCommitment}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.timeCommitment ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.timeCommitment
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 >
                   <option value="">Select Time Commitment</option>
@@ -647,9 +878,13 @@ function App() {
                   <option value="9-12 hours/week">9-12 hours/week</option>
                   <option value="12+ hours/week">12+ hours/week</option>
                 </select>
-                {errors.timeCommitment && <p className="text-red-500 text-xs mt-1">{errors.timeCommitment}</p>}
+                {errors.timeCommitment && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.timeCommitment}
+                  </p>
+                )}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Are you available for weekend workshops/events? *
@@ -659,7 +894,9 @@ function App() {
                   value={formData.weekendAvailability}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.weekendAvailability ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.weekendAvailability
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 >
                   <option value="">Select Option</option>
@@ -667,9 +904,13 @@ function App() {
                   <option value="No">No</option>
                   <option value="Sometimes">Sometimes</option>
                 </select>
-                {errors.weekendAvailability && <p className="text-red-500 text-xs mt-1">{errors.weekendAvailability}</p>}
+                {errors.weekendAvailability && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.weekendAvailability}
+                  </p>
+                )}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Can you commit for the entire academic year? *
@@ -679,14 +920,20 @@ function App() {
                   value={formData.yearCommitment}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                    errors.yearCommitment ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.yearCommitment
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                 >
                   <option value="">Select Option</option>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </select>
-                {errors.yearCommitment && <p className="text-red-500 text-xs mt-1">{errors.yearCommitment}</p>}
+                {errors.yearCommitment && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.yearCommitment}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -696,7 +943,7 @@ function App() {
             <h2 className="text-2xl font-semibold border-b border-gray-300 dark:border-gray-600 pb-2">
               Motivation & Goals
             </h2>
-            
+
             <div>
               <label className="block text-sm font-medium mb-1">
                 What do you hope to learn/achieve through this club? *
@@ -708,18 +955,24 @@ function App() {
                 rows={4}
                 maxLength={500}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                  errors.learnAchieve ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  errors.learnAchieve
+                    ? "border-red-500"
+                    : "border-gray-300 dark:border-gray-600"
                 }`}
                 placeholder="Share your goals and what you hope to achieve (max 500 characters)"
               ></textarea>
               <div className="flex justify-between">
-                {errors.learnAchieve && <p className="text-red-500 text-xs mt-1">{errors.learnAchieve}</p>}
+                {errors.learnAchieve && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.learnAchieve}
+                  </p>
+                )}
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-right mt-1">
                   {formData.learnAchieve.length}/500
                 </p>
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium mb-1">
                 How do you see yourself contributing to team projects? *
@@ -731,18 +984,24 @@ function App() {
                 rows={4}
                 maxLength={500}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                  errors.teamContribution ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  errors.teamContribution
+                    ? "border-red-500"
+                    : "border-gray-300 dark:border-gray-600"
                 }`}
                 placeholder="Describe how you can contribute to team projects (max 500 characters)"
               ></textarea>
               <div className="flex justify-between">
-                {errors.teamContribution && <p className="text-red-500 text-xs mt-1">{errors.teamContribution}</p>}
+                {errors.teamContribution && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.teamContribution}
+                  </p>
+                )}
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-right mt-1">
                   {formData.teamContribution.length}/500
                 </p>
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium mb-1">
                 Describe a time when you solved a technical problem creatively *
@@ -754,12 +1013,18 @@ function App() {
                 rows={4}
                 maxLength={500}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                  errors.problemSolving ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  errors.problemSolving
+                    ? "border-red-500"
+                    : "border-gray-300 dark:border-gray-600"
                 }`}
                 placeholder="Share an example of creative problem solving (max 500 characters)"
               ></textarea>
               <div className="flex justify-between">
-                {errors.problemSolving && <p className="text-red-500 text-xs mt-1">{errors.problemSolving}</p>}
+                {errors.problemSolving && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.problemSolving}
+                  </p>
+                )}
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-right mt-1">
                   {formData.problemSolving.length}/500
                 </p>
@@ -772,7 +1037,7 @@ function App() {
             <h2 className="text-2xl font-semibold border-b border-gray-300 dark:border-gray-600 pb-2">
               Additional Information
             </h2>
-            
+
             <div>
               <label className="block text-sm font-medium mb-1">
                 Do you have any questions about the club or positions?
@@ -790,7 +1055,7 @@ function App() {
                 {formData.questions.length}/300
               </p>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium mb-1">
                 Is there anything else you'd like us to know?
@@ -808,7 +1073,7 @@ function App() {
                 {formData.additionalInfo.length}/300
               </p>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium mb-1">
                 How did you hear about our club? *
@@ -818,7 +1083,9 @@ function App() {
                 value={formData.hearAbout}
                 onChange={handleInputChange}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 ${
-                  errors.hearAbout ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  errors.hearAbout
+                    ? "border-red-500"
+                    : "border-gray-300 dark:border-gray-600"
                 }`}
               >
                 <option value="">Select Option</option>
@@ -827,17 +1094,21 @@ function App() {
                 <option value="Poster">Poster</option>
                 <option value="Faculty">Faculty</option>
                 <option value="Website">Website</option>
-                <option value="College Notice Board">College Notice Board</option>
+                <option value="College Notice Board">
+                  College Notice Board
+                </option>
                 <option value="Other">Other</option>
-                </select>
-                {errors.hearAbout && <p className="text-red-500 text-xs mt-1">{errors.hearAbout}</p>}
+              </select>
+              {errors.hearAbout && (
+                <p className="text-red-500 text-xs mt-1">{errors.hearAbout}</p>
+              )}
             </div>
           </div>
 
           {/* Declaration Section */}
           <div className="space-y-4 p-4 bg-gray-100 dark:bg-gray-600 rounded-lg">
             <h2 className="text-xl font-semibold">Declaration</h2>
-            
+
             <div className="space-y-3">
               <label className="flex items-start space-x-2">
                 <input
@@ -847,10 +1118,17 @@ function App() {
                   onChange={handleInputChange}
                   className="mt-1 rounded text-blue-600 focus:ring-blue-500"
                 />
-                <span>I confirm that all information provided is accurate and complete *</span>
+                <span>
+                  I confirm that all information provided is accurate and
+                  complete *
+                </span>
               </label>
-              {errors.declaration1 && <p className="text-red-500 text-xs mt-1">{errors.declaration1}</p>}
-              
+              {errors.declaration1 && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.declaration1}
+                </p>
+              )}
+
               <label className="flex items-start space-x-2">
                 <input
                   type="checkbox"
@@ -859,9 +1137,16 @@ function App() {
                   onChange={handleInputChange}
                   className="mt-1 rounded text-blue-600 focus:ring-blue-500"
                 />
-                <span>I understand the commitment required and am willing to actively participate *</span>
+                <span>
+                  I understand the commitment required and am willing to
+                  actively participate *
+                </span>
               </label>
-              {errors.declaration2 && <p className="text-red-500 text-xs mt-1">{errors.declaration2}</p>}
+              {errors.declaration2 && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.declaration2}
+                </p>
+              )}
             </div>
           </div>
 
@@ -871,14 +1156,35 @@ function App() {
               type="submit"
               disabled={loading}
               className={`px-6 py-3 text-white font-medium rounded-lg shadow-md transition-colors duration-300 ${
-                loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
               }`}
             >
-              {loading ? 'Submitting...' : 'Submit Application'}
+              {loading ? "Submitting..." : "Submit Application"}
             </button>
           </div>
         </form>
       </div>
+
+      <div className="mt-10 rounded-b-md shadow-inner">
+  {/* Gradient top part for President info */}
+  <div className="bg-gradient-to-r from-blue-700 to-purple-700 text-white text-center py-4 rounded-t-md">
+    <p className="text-sm font-semibold">President of Club - Ujjval Dubey (2410070020)</p>
+    <p className="text-sm">B.Tech 2nd Year, +91 95589
+      81363</p>
+  </div>
+
+  {/* Dark base section for Faculty info */}
+  <div className="bg-zinc-800 text-gray-300 text-center py-3 px-2 rounded-b-md">
+    <p className="text-sm font-medium">
+      Dr. Akhilesh Kumar Mishra – <span className="italic">Faculty Coordinator</span>
+    </p>
+    <p className="text-sm">Electrosapien Club (Department of EEE), +91 79050 48624</p>
+  </div>
+</div>
+
+
     </div>
   );
 }
