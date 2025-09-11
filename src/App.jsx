@@ -275,33 +275,40 @@ function App() {
 
 
 
-<div className=" w-full text-white          ">
+
+
+<div className="w-full text-white ">
   {/* Full-width outer container */}
-  <div className="px-6 py-4 flex flex-col sm:flex-row sm:justify-between items-center text-center sm:text-left max-w-screen-xl mx-auto">
-    
-    {/* Left: College Name */}
-    <div>
-      {/* <span className="text-xl font-bold tracking-wide">IILM University</span> */}
-      <img src={cllgName} alt="" className="w-36 h-12" />
-      <p className="text-sm text-gray-400">Greater Noida, India</p>
+  <div className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-6">
+    <div className="flex   justify-between items-center max-w-screen-xl mx-auto gap-6 lg:gap-8">
+      
+      {/* Left: College Name */}
+      <div className="flex flex-col items-center lg:items-start">
+        <img 
+          src={cllgName} 
+          alt="IILM University" 
+          className="w-28 h-8 sm:w-32 sm:h-10 lg:w-40 lg:h-12 object-contain mb-1" 
+        />
+        <p className="text-xs sm:text-sm text-gray-400">Greater Noida, India</p>
+      </div>
+
+      {/* Right: Club Name */}
+      <div className="flex flex-col items-center lg:items-start ">
+        <img 
+          src={clubLogo} 
+          alt="ElectroSapien Club" 
+          className="w-28 h-14 sm:w-32 sm:h-16 lg:w-40 lg:h-20 object-contain mb-1" 
+        />
+        <p className="text-xs sm:text-sm italic text-gray-400 text-center lg:text-right max-w-48 lg:max-w-none">
+          Where ECE meets AI & Robotics
+        </p>
+      </div>
+
+      
+
     </div>
-
-    {/* Right: Club Name */}
-    <div className="mt-2 sm:mt-0">
-      {/* <h1 className="text-xl font-extrabold tracking-wide">
-        Electro<span className="text-blue-400">S</span>apien Club
-      </h1> */}
-
-      <img src={clubLogo} alt="" className="w-36 h-20" />
-
-      <p className="text-sm italic text-gray-400">Where ECE meets AI & Robotics</p>
-    </div>
-
   </div>
 </div>
-
-
-
 
 
 
